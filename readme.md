@@ -1,47 +1,36 @@
-# [product_action_subject]
+# gogs_install_application
 
 ## Description:
 
-Write a simple description of the role here.
+Installs a containerised Go Git Service on a Docker host.
 
 ## Behaviour:
 
-Use Gherkin to define the behaviour of the role as shwon in the following examples:
-
-**Feature:** Fails if "pre-condition" not met
-- **Given** the pre-condition 
-- **Then** the creation/installation/configuration process is halted
-
-
-**Feature:** Creates/Installs/Configures a Subject  
-- **Given** a pre-condition
-- **Given** another pre-condition 
-- **When** the action  
-- **Then** the outcome   
-- **Then** another outcome  
-
+**Feature:** Install GoGS
+- **Given** the RHEL machine is configured as a Docker host
+- **Given** a GoGS Docker image is available from a specified registry
+- **Given** a MariaDb image is available from a specified registry
+- **Given** MariaDb does not run on the host as a service
+- **Given** Docker Compose is installed on the host
+- **When** Docker Compose is requested to run the application containers
+- **Then** the GoGS container is running with a Named Volume
+- **Then** the MariaDb container is running with a Named Volume
+- **Then** GoGS container is linked to the MariaDb container
 
 ## Configuration:
 
-A list of the external variables used by the role.
-
-| Variable  | Description  | Example  | 
+| Variable  | Description  | Default  |
 |---|---|---|
-| **var1**  | Var1 description  |  Var1 example. |
-| **var2**  |   |   |
-| **var3**  |   |   |
-
-
-## Usage:
-
-How to invoke the role from a playbook:
-
-```yaml
-- name: Creates Tenant
-  include_role:
-    name: OpenShift_Create_Tenant
-  vars:
-    var1: '???'
-    var2: '???'
-    var3: '???'
-```
+| **mysql_root_password**  | MariaDb root password.  | None |
+| **mysql_user_password**  | MariaDb user password.  | None |
+| **gogs_registry_login** |  Whether login is required for the GoGS Docker registry. |false |
+| **gogs_registry** | The GoGS Docker registry hostname. Must end with a forward slash. | docker.io/ |
+| **gogs_image_name** | The GoGS image name including tag if required. | gogs/gogs |
+| **gogs_http_port** | GoGS http port mappings: HostPort:ContainerPort. | 10080:3000 |
+| **gogs_ssh_port** | GoGS ssh port mappings: HostPort:ContainerPort. | 10022:22 |
+| **gogs_data** | GoGS named volume path. | /data |
+| **mariadb_registry_login** | Whether login is required for the MariaDb Docker registry. | false |
+| **mariadb_registry** | The MariaDb Docker registry hostname. Must end with a forward slash | docker.io/ |
+| **mariadb_image_name** | The name of the MariaDb image including tags if required. | library/mariadb |
+| **mariadb_data** | The path of the MariaDb named volume. | /var/lib/mysql |
+| **mariadb_port** | MariaDb port mappings: HostPort:ContainerPort. | 3306:3306 |
