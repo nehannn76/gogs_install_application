@@ -18,7 +18,12 @@
     password: "{{ mariadb_registry_password }}"
   when: mariadb_registry_login == true
 
-- name: Pulling Gogs image
+- name: Ensuring MariDb service is not installed
+  yum:
+    name: mariadb
+    state: absent
+
+- name: Pulling MariaDb image
   docker_image:
      name: "{{ mariadb_registry }}{{ mariadb_image_name }}"
      state: present
@@ -41,7 +46,7 @@
             - "gogs-data:{{ gogs_data }}"
           links:
             - gogs_database
-        gogs-database:
+        gogs_database:
           image: "{{ mariadb_registry }}{{ mariadb_image_name }}"
           container_name: gogs_database
           restart: unless-stopped
