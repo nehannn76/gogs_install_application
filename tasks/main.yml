@@ -1,0 +1,34 @@
+---
+- name: Logging into Docker Registry
+  docker_login:
+    registry: "{{ gogs_registry }}"
+    username: "{{ gogs_registry_username }}"
+    password: "{{ gogs_registry_password }}"
+  when: gogs_registry_login == true
+
+- name: Pulling Gogs image
+  docker_image:
+     name: "{{ gogs_registry }}{{ gogs_image_name }}"
+     state: present
+
+- name: Starting up the Gogs container using a data volume
+  docker_service:
+    state: present
+    project_name: Gogs
+    definition:
+      version: '2'
+      services:
+        gogs3:
+          image: "{{ gogs_registry }}{{ gogs_image_name }}"
+          ports:
+            - "{{ gogs_port }}"
+            - "{{ gogs_ssh_port }}"
+          volumes:
+            - "gogs-data:{{ gogs_data }}"
+      volumes:
+        gogs-data:
+  become: yes
+  register: output
+
+- debug:
+    var: output

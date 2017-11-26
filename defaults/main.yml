@@ -1,0 +1,9 @@
+---
+gogs_registry_login: false
+# must end with / when a registry URI is specified e.g. my_registry/ otherwise empty for Docker Store.
+gogs_registry: ""
+gogs_image_name: "gogs/gogs"
+gogs_http_port: "10080:3000"
+gogs_ssh_port: "10022:22"
+gogs_data: "/data"
+...
