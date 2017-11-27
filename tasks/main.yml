@@ -41,9 +41,6 @@
           restart: unless-stopped
           ports:
             - "{{ gogs_http_port }}"
-            - "{{ gogs_ssh_port }}"
-          volumes:
-            - "gogs-data:{{ gogs_data }}"
           links:
             - gogs_database
         gogs_database:
@@ -60,9 +57,7 @@
             - "MYSQL_DATABASE=gogs"
             - "MYSQL_USER=gogsuser"
       volumes:
-        gogs-data:
         mariadb-data:
-  become: yes
   register: output
 
 - debug:

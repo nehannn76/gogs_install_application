@@ -13,7 +13,7 @@ Installs a containerised Go Git Service on a Docker host.
 - **Given** MariaDb does not run on the host as a service
 - **Given** Docker Compose is installed on the host
 - **When** Docker Compose is requested to run the application containers
-- **Then** the GoGS container is running with a Named Volume
+- **Then** the GoGS container is running
 - **Then** the MariaDb container is running with a Named Volume
 - **Then** GoGS container is linked to the MariaDb container
 
@@ -27,8 +27,6 @@ Installs a containerised Go Git Service on a Docker host.
 | **gogs_registry** | The GoGS Docker registry hostname. Must end with a forward slash. | docker.io/ |
 | **gogs_image_name** | The GoGS image name including tag if required. | gogs/gogs |
 | **gogs_http_port** | GoGS http port mappings: HostPort:ContainerPort. | 10080:3000 |
-| **gogs_ssh_port** | GoGS ssh port mappings: HostPort:ContainerPort. | 10022:22 |
-| **gogs_data** | GoGS named volume path. | /data |
 | **mariadb_registry_login** | Whether login is required for the MariaDb Docker registry. | false |
 | **mariadb_registry** | The MariaDb Docker registry hostname. Must end with a forward slash | docker.io/ |
 | **mariadb_image_name** | The name of the MariaDb image including tags if required. | library/mariadb |
